@@ -14,7 +14,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const { db } = await connectToDatabase();
-    const teamsCollection = db.collection('teams');
+    const teamsCollection = db.collection('Game_team');
 
     // GET - Récupérer toutes les équipes
     if (req.method === 'GET') {
