@@ -117,7 +117,7 @@ const App: React.FC = () => {
             <Trophy className="text-yellow-400" />
           </h2>
           <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto mb-16">
-             {/* Champagne - Grand Vainqueur */}
+             {/* Champagne - 1ère place */}
              <div className="bg-gradient-to-br from-yellow-500 to-amber-600 text-white p-8 md:p-10 rounded-[2rem] relative overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 group ring-4 ring-transparent hover:ring-yellow-400/50">
                 <div className="absolute -right-8 -top-8 opacity-20 transform rotate-12 group-hover:rotate-6 transition-transform duration-500">
                    <Trophy size={200} />
@@ -129,16 +129,16 @@ const App: React.FC = () => {
                       </div>
                       <h2 className="font-pixel text-xl md:text-2xl mb-3">🍾 CHAMPAGNE</h2>
                       <p className="text-yellow-50 font-medium text-lg leading-relaxed max-w-sm">
-                          Une bouteille de champagne pour l'équipe victorieuse du <strong>tournoi cumulé</strong>.
+                          Une bouteille de champagne pour l'équipe arrivée <strong>première</strong>.
                       </p>
                    </div>
                    <div className="bg-black/20 self-start px-4 py-2 rounded-lg text-sm font-bold backdrop-blur-sm">
-                      🥇 1ère place cumul
+                      🥇 1ère place
                    </div>
                 </div>
              </div>
 
-             {/* Vin - Vainqueurs de chaque tournoi */}
+             {/* Vin - 2ème place */}
              <div className="bg-gradient-to-br from-purple-600 to-pink-600 text-white p-8 md:p-10 rounded-[2rem] relative overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 group ring-4 ring-transparent hover:ring-purple-400/50">
                  <div className="absolute -right-8 -top-8 opacity-20 transform -rotate-12 group-hover:-rotate-6 transition-transform duration-500">
                    <Medal size={200} />
@@ -150,16 +150,16 @@ const App: React.FC = () => {
                       </div>
                       <h2 className="font-pixel text-xl md:text-2xl mb-3">🍷 VIN</h2>
                       <p className="text-purple-50 font-medium text-lg leading-relaxed max-w-sm">
-                          Une bouteille de vin pour les équipes gagnantes de <strong>chaque tournoi</strong> (Mario Kart & Just Dance).
+                          Une bouteille de vin pour l'équipe arrivée <strong>deuxième</strong>.
                       </p>
                    </div>
                    <div className="bg-black/20 self-start px-4 py-2 rounded-lg text-sm font-bold backdrop-blur-sm">
-                      🥇 1ères places tournois
+                      🥈 2ème place
                    </div>
                 </div>
              </div>
 
-             {/* Bières/Softs - Deuxièmes */}
+             {/* Bières/Softs - 3ème place */}
              <div className="bg-gradient-to-br from-n-blue to-cyan-600 text-white p-8 md:p-10 rounded-[2rem] relative overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 group ring-4 ring-transparent hover:ring-cyan-400/50">
                  <div className="absolute -right-8 -top-8 opacity-20 transform rotate-6 group-hover:rotate-0 transition-transform duration-500">
                    <Star size={200} />
@@ -171,11 +171,11 @@ const App: React.FC = () => {
                       </div>
                       <h2 className="font-pixel text-xl md:text-2xl mb-3">🍺 BIÈRES / SOFTS</h2>
                       <p className="text-cyan-50 font-medium text-lg leading-relaxed max-w-sm">
-                          Des bières ou softs offerts pour les équipes arrivées <strong>deuxièmes</strong> de chaque tournoi.
+                          Des bières ou softs offerts pour l'équipe arrivée <strong>troisième</strong>.
                       </p>
                    </div>
                    <div className="bg-black/20 self-start px-4 py-2 rounded-lg text-sm font-bold backdrop-blur-sm">
-                      🥈 2èmes places tournois
+                      🥉 3ème place
                    </div>
                 </div>
              </div>
