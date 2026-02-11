@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { connectToDatabase } from '../_lib/mongodb';
+import { ObjectId } from 'mongodb';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Headers CORS
@@ -21,9 +22,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const { db } = await connectToDatabase();
     const teamsCollection = db.collection('teams');
 
-    // GET - Récupérer une équipe par ID
+    // Convertir l'ID string en ObjectId MongoDB
+    let objectId: ObjectId;
+    try {
+      objectId = new ObjectId(id);
+    } catch {
+      return res.status(400).json({ error: 'ID invalide' });
+    }
+
+    // GET - Récupérer une équipe par ID MongoDB
     if (req.method === 'GET') {
-      const team = await teamsCollection.findOne({ id: id });
+      const team = await teamsCollection.findOne({ _id: objectId });
       
       if (!team) {
         return res.status(404).json({ error: 'Équipe non trouvée' });
@@ -34,7 +43,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // DELETE - Supprimer une équipe
     if (req.method === 'DELETE') {
-      const result = await teamsCollection.deleteOne({ id: id });
+      const result = await teamsCollection.deleteOne({ _id: objectId });
       
       if (result.deletedCount === 0) {
         return res.status(404).json({ error: 'Équipe non trouvée' });

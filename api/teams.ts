@@ -30,27 +30,30 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(400).json({ error: 'Données invalides' });
       }
 
+      // 1. D'abord insérer dans MongoDB pour obtenir l'ID
       const result = await teamsCollection.insertOne(team);
+      const mongoId = result.insertedId.toString();
       
       const captain = team.members[0];
       const captainName = `${captain.firstname} ${captain.lastname}`;
       const invitedEmails = team.invitedEmails || [];
       
-      // Envoyer email de confirmation au capitaine
+      // 2. Ensuite envoyer les emails avec l'ID MongoDB
+      // Email de confirmation au capitaine
       await sendCaptainConfirmation({
         to: captain.email,
         teamName: team.name,
-        teamId: team.id,
+        teamId: mongoId,
         captainName,
         invitedEmails
       });
       
-      // Envoyer les emails d'invitation aux coéquipiers
+      // Emails d'invitation aux coéquipiers
       if (invitedEmails.length > 0) {
         const emailResults = await sendTeammateInvitations(
           invitedEmails,
           team.name,
-          team.id,
+          mongoId,
           captainName
         );
         

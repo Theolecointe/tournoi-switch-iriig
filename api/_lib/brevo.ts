@@ -5,8 +5,8 @@ apiInstance.setApiKey(brevo.TransactionalEmailsApiApiKeys.apiKey, process.env.BR
 
 // IDs des templates transactionnels Brevo
 const TEMPLATES = {
-  CAPTAIN_CONFIRMATION: 1,  // Template de confirmation pour le capitaine
-  TEAMMATE_INVITATION: 2    // Template d'invitation pour les coéquipiers
+  CAPTAIN_CONFIRMATION: 3,  // Template de confirmation pour le capitaine
+  TEAMMATE_INVITATION: 4    // Template d'invitation pour les coéquipiers
 };
 
 interface InvitationEmailParams {
@@ -35,11 +35,8 @@ export const sendCaptainConfirmation = async ({ to, teamName, teamId, captainNam
   
   // Variables disponibles dans le template Brevo
   sendSmtpEmail.params = {
-    TEAM_NAME: teamName,
-    CAPTAIN_NAME: captainName,
-    TEAM_ID: teamId,
-    INVITED_EMAILS: invitedEmails.join(', '),
-    INVITED_COUNT: invitedEmails.length
+    EQUIPE: teamName,
+    ID: teamId
   };
 
   try {
@@ -65,10 +62,7 @@ export const sendTeammateInvitation = async ({ to, teamName, teamId, captainName
   
   // Variables disponibles dans le template Brevo
   sendSmtpEmail.params = {
-    TEAM_NAME: teamName,
-    CAPTAIN_NAME: captainName,
-    JOIN_URL: joinUrl,
-    TEAM_ID: teamId
+    ID: teamId
   };
 
   try {

@@ -8,6 +8,7 @@ export interface Member {
 }
 
 export interface Team {
+  _id?: string; // ID MongoDB
   id: string;
   name: string;
   members: Member[];
