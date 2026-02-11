@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createTeamInMongo } from '../services/mongoService';
-import { X, Trophy, Gamepad2, Mail, UserPlus, Loader2 } from 'lucide-react';
+import { X, Trophy, Gamepad2, Mail, UserPlus, Loader2, CheckCircle, Copy, Check } from 'lucide-react';
 
 interface Props {
   isOpen: boolean;
@@ -16,11 +16,34 @@ const RegisterModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
   const [teammateEmails, setTeammateEmails] = useState(['', '', '']);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [createdTeamId, setCreatedTeamId] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const updateTeammateEmail = (index: number, value: string) => {
     const newEmails = [...teammateEmails];
     newEmails[index] = value;
     setTeammateEmails(newEmails);
+  };
+
+  const handleClose = () => {
+    setIsSuccess(false);
+    setCreatedTeamId(null);
+    setTeamName('');
+    setFirstname('');
+    setLastname('');
+    setEmail('');
+    setTeammateEmails(['', '', '']);
+    setError(null);
+    onClose();
+  };
+
+  const copyTeamId = async () => {
+    if (createdTeamId) {
+      await navigator.clipboard.writeText(createdTeamId);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
   };
 
   if (!isOpen) return null;
@@ -32,9 +55,10 @@ const RegisterModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
 
     try {
       const validEmails = teammateEmails.filter(email => email.trim() !== '');
-      await createTeamInMongo(teamName, { firstname, lastname, email }, validEmails);
+      const result = await createTeamInMongo(teamName, { firstname, lastname, email }, validEmails);
+      setCreatedTeamId(result._id || result.id);
+      setIsSuccess(true);
       onSuccess();
-      onClose();
     } catch (err) {
       setError('Une erreur est survenue lors de la création de l\'équipe. Veuillez réessayer.');
       console.error(err);
@@ -48,13 +72,56 @@ const RegisterModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
       <div className="bg-gray-900 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl transform transition-all border-4 border-n-red">
         <div className="bg-n-red p-4 flex justify-between items-center text-white">
           <h3 className="font-pixel text-sm md:text-base flex items-center gap-2">
-            <Trophy size={20} /> Nouvelle Équipe
+            <Trophy size={20} /> {isSuccess ? 'Équipe Créée !' : 'Nouvelle Équipe'}
           </h3>
-          <button onClick={onClose} className="hover:bg-white/20 p-1 rounded-full transition-colors">
+          <button onClick={handleClose} className="hover:bg-white/20 p-1 rounded-full transition-colors">
             <X size={24} />
           </button>
         </div>
         
+        {isSuccess ? (
+          <div className="p-6 text-center space-y-6">
+            <div className="flex justify-center">
+              <div className="bg-green-500/20 p-4 rounded-full">
+                <CheckCircle size={64} className="text-green-500" />
+              </div>
+            </div>
+            <div>
+              <h4 className="text-xl font-bold text-white mb-2">Félicitations !</h4>
+              <p className="text-gray-400">
+                Votre équipe <span className="text-n-red font-bold">"{teamName}"</span> a été créée avec succès.
+              </p>
+            </div>
+            
+            {createdTeamId && (
+              <div className="bg-gray-800 rounded-xl p-4">
+                <p className="text-sm text-gray-400 mb-2">ID de votre équipe :</p>
+                <div className="flex items-center gap-2">
+                  <code className="flex-1 bg-gray-700 px-3 py-2 rounded-lg text-n-blue font-mono text-sm break-all">
+                    {createdTeamId}
+                  </code>
+                  <button
+                    onClick={copyTeamId}
+                    className="bg-gray-700 hover:bg-gray-600 p-2 rounded-lg transition-colors"
+                    title="Copier l'ID"
+                  >
+                    {copied ? <Check size={20} className="text-green-500" /> : <Copy size={20} className="text-gray-400" />}
+                  </button>
+                </div>
+                <p className="text-xs text-gray-500 mt-2">
+                  Partagez cet ID avec vos coéquipiers pour qu'ils puissent rejoindre l'équipe.
+                </p>
+              </div>
+            )}
+
+            <button
+              onClick={handleClose}
+              className="w-full bg-n-red hover:bg-red-700 text-white font-bold py-3 rounded-xl shadow-[0_4px_0_rgb(153,27,27)] active:shadow-[0_0px_0_rgb(153,27,27)] active:translate-y-[4px] transition-all"
+            >
+              Fermer
+            </button>
+          </div>
+        ) : (
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
             <label className="block text-gray-300 font-bold mb-1 text-sm">Nom de l'équipe</label>
@@ -150,6 +217,7 @@ const RegisterModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
             </p>
           </div>
         </form>
+        )}
       </div>
     </div>
   );

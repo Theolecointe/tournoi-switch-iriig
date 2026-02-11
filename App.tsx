@@ -23,7 +23,7 @@ const App: React.FC = () => {
   const [isJoinOpen, setIsJoinOpen] = useState(false);
 
   const handleRegistrationSuccess = () => {
-    alert("Équipe enregistrée avec succès !");
+    // Succès géré visuellement dans le modal
   };
 
   const handleJoinSuccess = () => {
