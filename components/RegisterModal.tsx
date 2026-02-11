@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createTeamInMongo } from '../services/mongoService';
-import { X, Trophy, Gamepad2, Mail, UserPlus, Loader2, CheckCircle, Copy, Check } from 'lucide-react';
+import { X, Trophy, Gamepad2, Mail, UserPlus, Loader2, CheckCircle, Copy, Check, Ticket } from 'lucide-react';
 
 interface Props {
   isOpen: boolean;
@@ -114,9 +114,26 @@ const RegisterModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
               </div>
             )}
 
+            <div className="bg-yellow-500/10 border-2 border-yellow-500 rounded-xl p-4">
+              <p className="text-yellow-400 font-bold text-sm mb-2 flex items-center gap-2">
+                ⚠️ ÉTAPE OBLIGATOIRE
+              </p>
+              <p className="text-gray-300 text-sm mb-3">
+                Pour finaliser votre inscription, vous devez prendre votre billet sur HelloAsso.
+              </p>
+              <a
+                href="https://www.helloasso.com/associations/handisport-ligue-auvergne-rhone-alpes/evenements/billet-mario-kart"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-3 rounded-xl shadow-[0_4px_0_rgb(161,98,7)] active:shadow-[0_0px_0_rgb(161,98,7)] active:translate-y-[4px] transition-all flex items-center justify-center gap-2"
+              >
+                <Ticket size={20} /> Prendre mon ticket
+              </a>
+            </div>
+
             <button
               onClick={handleClose}
-              className="w-full bg-n-red hover:bg-red-700 text-white font-bold py-3 rounded-xl shadow-[0_4px_0_rgb(153,27,27)] active:shadow-[0_0px_0_rgb(153,27,27)] active:translate-y-[4px] transition-all"
+              className="w-full text-gray-500 hover:text-gray-300 font-medium py-2 transition-all text-sm"
             >
               Fermer
             </button>

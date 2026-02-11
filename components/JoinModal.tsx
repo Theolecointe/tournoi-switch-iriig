@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Team, Member } from '../types';
-import { X, Users, UserPlus, Search, Loader2, User } from 'lucide-react';
+import { X, Users, UserPlus, Search, Loader2, User, CheckCircle, Ticket } from 'lucide-react';
 
 interface Props {
   isOpen: boolean;
@@ -25,6 +25,20 @@ const JoinModal: React.FC<Props> = ({ isOpen, onClose, onSuccess, initialTeamId 
   const [email, setEmail] = useState('');
   const [isJoining, setIsJoining] = useState(false);
   const [joinError, setJoinError] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const handleClose = () => {
+    setIsSuccess(false);
+    setTeamId('');
+    setTeam(null);
+    setShowJoinForm(false);
+    setFirstname('');
+    setLastname('');
+    setEmail('');
+    setSearchError(null);
+    setJoinError(null);
+    onClose();
+  };
 
   if (!isOpen) return null;
 
@@ -85,8 +99,8 @@ const JoinModal: React.FC<Props> = ({ isOpen, onClose, onSuccess, initialTeamId 
         return;
       }
 
+      setIsSuccess(true);
       onSuccess();
-      onClose();
     } catch (error) {
       setJoinError('Erreur de connexion au serveur');
       console.error(error);
@@ -102,13 +116,52 @@ const JoinModal: React.FC<Props> = ({ isOpen, onClose, onSuccess, initialTeamId 
       <div className="bg-gray-900 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl transform transition-all border-4 border-n-blue">
         <div className="bg-n-blue p-4 flex justify-between items-center text-white">
           <h3 className="font-pixel text-sm md:text-base flex items-center gap-2">
-            <Users size={20} /> Rejoindre une équipe
+            <Users size={20} /> {isSuccess ? 'Inscription réussie !' : 'Rejoindre une équipe'}
           </h3>
-          <button onClick={onClose} className="hover:bg-white/20 p-1 rounded-full transition-colors">
+          <button onClick={handleClose} className="hover:bg-white/20 p-1 rounded-full transition-colors">
             <X size={24} />
           </button>
         </div>
         
+        {isSuccess ? (
+          <div className="p-6 text-center space-y-6">
+            <div className="flex justify-center">
+              <div className="bg-green-500/20 p-4 rounded-full">
+                <CheckCircle size={64} className="text-green-500" />
+              </div>
+            </div>
+            <div>
+              <h4 className="text-xl font-bold text-white mb-2">Bienvenue dans l'équipe !</h4>
+              <p className="text-gray-400">
+                Vous avez rejoint l'équipe <span className="text-n-blue font-bold">"{team?.name}"</span> avec succès.
+              </p>
+            </div>
+
+            <div className="bg-yellow-500/10 border-2 border-yellow-500 rounded-xl p-4 text-left">
+              <p className="text-yellow-400 font-bold text-sm mb-2 flex items-center gap-2">
+                ⚠️ ÉTAPE OBLIGATOIRE
+              </p>
+              <p className="text-gray-300 text-sm mb-3">
+                Pour finaliser votre inscription, vous devez prendre votre billet sur HelloAsso.
+              </p>
+              <a
+                href="https://www.helloasso.com/associations/handisport-ligue-auvergne-rhone-alpes/evenements/billet-mario-kart"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-3 rounded-xl shadow-[0_4px_0_rgb(161,98,7)] active:shadow-[0_0px_0_rgb(161,98,7)] active:translate-y-[4px] transition-all flex items-center justify-center gap-2"
+              >
+                <Ticket size={20} /> Prendre mon ticket
+              </a>
+            </div>
+
+            <button
+              onClick={handleClose}
+              className="w-full text-gray-500 hover:text-gray-300 font-medium py-2 transition-all text-sm"
+            >
+              Fermer
+            </button>
+          </div>
+        ) : (
         <div className="p-6 space-y-4">
           {/* Recherche par ID */}
           <div>
@@ -230,6 +283,7 @@ const JoinModal: React.FC<Props> = ({ isOpen, onClose, onSuccess, initialTeamId 
             </form>
           )}
         </div>
+        )}
       </div>
     </div>
   );

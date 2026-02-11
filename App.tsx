@@ -27,7 +27,7 @@ const App: React.FC = () => {
   };
 
   const handleJoinSuccess = () => {
-    alert("Vous avez rejoint l'équipe avec succès !");
+    // Succès géré visuellement dans le modal
   };
 
   return (
