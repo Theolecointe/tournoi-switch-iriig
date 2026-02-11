@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@getbrevo/brevo": "^3.0.1",
     "@vercel/node": "^5.6.2",
     "lucide-react": "^0.562.0",
     "mongodb": "^7.1.0",

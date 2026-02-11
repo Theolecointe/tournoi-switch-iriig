@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { connectToDatabase } from './_lib/mongodb';
+import { sendTeamInvitations } from './_lib/brevo';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Headers CORS
@@ -30,6 +31,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
 
       const result = await teamsCollection.insertOne(team);
+      
+      // Envoyer les emails d'invitation aux coéquipiers
+      if (team.invitedEmails && team.invitedEmails.length > 0) {
+        const captain = team.members[0];
+        const captainName = `${captain.firstname} ${captain.lastname}`;
+        
+        const emailResults = await sendTeamInvitations(
+          team.invitedEmails,
+          team.name,
+          team.id,
+          captainName
+        );
+        
+        console.log(`📧 Invitations: ${emailResults.sent.length} envoyées, ${emailResults.failed.length} échouées`);
+      }
       
       return res.status(201).json({
         ...team,
