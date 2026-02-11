@@ -86,7 +86,7 @@ const App: React.FC = () => {
                    <div className="absolute inset-0 bg-n-red/20 flex items-center justify-center">
                       <Car className="text-n-red opacity-50" size={32} />
                    </div>
-                   <img src="pictures/cover_mario_kart.jpeg" alt="Mario Kart Ambiance" className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" />
+                   <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeQqfl4pdcwK51c4qY5y1B13112lPmNQZZTg&s" alt="Mario Kart Ambiance" className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" />
                 </div>
                 <div className="absolute -bottom-2 -right-2 bg-n-red text-white text-[10px] md:text-xs font-pixel px-2 py-1 rounded shadow-lg border border-white">RACE</div>
               </div>
