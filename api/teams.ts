@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { connectToDatabase } from './_lib/mongodb';
-import { sendCaptainConfirmation, sendTeammateInvitations } from './_lib/brevo';
+import { connectToDatabase } from './_lib/mongodb.js';
+import { sendCaptainConfirmation, sendTeammateInvitations } from './_lib/brevo.js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Headers CORS
