@@ -68,9 +68,9 @@ const RegisterModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-      <div className="bg-gray-900 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl transform transition-all border-4 border-n-red">
-        <div className="bg-n-red p-4 flex justify-between items-center text-white">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
+      <div className="bg-gray-900 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl transform transition-all border-4 border-n-red my-auto max-h-[90vh] flex flex-col">
+        <div className="bg-n-red p-4 flex justify-between items-center text-white flex-shrink-0">
           <h3 className="font-pixel text-sm md:text-base flex items-center gap-2">
             <Trophy size={20} /> {isSuccess ? 'Équipe Créée !' : 'Nouvelle Équipe'}
           </h3>
@@ -80,7 +80,7 @@ const RegisterModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
         </div>
         
         {isSuccess ? (
-          <div className="p-6 text-center space-y-6">
+          <div className="p-6 text-center space-y-6 overflow-y-auto flex-1">
             <div className="flex justify-center">
               <div className="bg-green-500/20 p-4 rounded-full">
                 <CheckCircle size={64} className="text-green-500" />
@@ -139,7 +139,7 @@ const RegisterModal: React.FC<Props> = ({ isOpen, onClose, onSuccess }) => {
             </button>
           </div>
         ) : (
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-6 space-y-4 overflow-y-auto flex-1">
           <div>
             <label className="block text-gray-300 font-bold mb-1 text-sm">Nom de l'équipe</label>
             <input

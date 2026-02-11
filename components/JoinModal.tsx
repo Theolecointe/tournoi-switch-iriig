@@ -112,9 +112,9 @@ const JoinModal: React.FC<Props> = ({ isOpen, onClose, onSuccess, initialTeamId 
   const isTeamFull = team && team.members && team.members.length >= 4;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-      <div className="bg-gray-900 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl transform transition-all border-4 border-n-blue">
-        <div className="bg-n-blue p-4 flex justify-between items-center text-white">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
+      <div className="bg-gray-900 rounded-3xl w-full max-w-md overflow-hidden shadow-2xl transform transition-all border-4 border-n-blue my-auto max-h-[90vh] flex flex-col">
+        <div className="bg-n-blue p-4 flex justify-between items-center text-white flex-shrink-0">
           <h3 className="font-pixel text-sm md:text-base flex items-center gap-2">
             <Users size={20} /> {isSuccess ? 'Inscription réussie !' : 'Rejoindre une équipe'}
           </h3>
@@ -124,7 +124,7 @@ const JoinModal: React.FC<Props> = ({ isOpen, onClose, onSuccess, initialTeamId 
         </div>
         
         {isSuccess ? (
-          <div className="p-6 text-center space-y-6">
+          <div className="p-6 text-center space-y-6 overflow-y-auto flex-1">
             <div className="flex justify-center">
               <div className="bg-green-500/20 p-4 rounded-full">
                 <CheckCircle size={64} className="text-green-500" />
@@ -162,7 +162,7 @@ const JoinModal: React.FC<Props> = ({ isOpen, onClose, onSuccess, initialTeamId 
             </button>
           </div>
         ) : (
-        <div className="p-6 space-y-4">
+        <div className="p-6 space-y-4 overflow-y-auto flex-1">
           {/* Recherche par ID */}
           <div>
             <label className="block text-gray-300 font-bold mb-2 text-sm">ID de l'équipe</label>
